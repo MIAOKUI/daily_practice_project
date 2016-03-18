@@ -7,9 +7,11 @@ class Tree:
         self.root.left = tree
     def add_right(self, tree):
         self.root.right = tree
+
     @property
     def left(self):
         return(self.root.left)
+
     @property
     def right(self):
         return(self.root.right)
@@ -32,6 +34,19 @@ class Tree:
                 stack.push(s.right)
             if s.left:
                 stack.push(s.left)
+
+    def visit_middle(self,fn):
+        if self.left:
+            self.left.visit_middle(fn)
+        fn(self.root.value)
+        if self.right:
+            self.right.visit_middle(fn)
+    def visit_last(self, fn):
+        if self.left:
+            self.left.visit_last(fn)
+        if self.right:
+            self.right.visit_last(fn)
+        fn(self.root.value)
 
     def iter_visit_middel(self,fn):
         stack = Stack()
@@ -90,28 +105,6 @@ class Tree:
                 fn(stack.pop().root.value)
 
 
-
-
-
-
-
-
-
-
-    def visit_middle(self,fn):
-        if self.left:
-            self.left.visit_middle(fn)
-        fn(self.root.value)
-        if self.right:
-            self.right.visit_middle(fn)
-    def visit_last(self, fn):
-        if self.left:
-            self.left.visit_last(fn)
-        if self.right:
-            self.right.visit_last(fn)
-        fn(self.root.value)
-
-
 if __name__ == '__main__':
     d = Tree('D')
     e = Tree('E')
@@ -129,4 +122,5 @@ if __name__ == '__main__':
     a = Tree('A')
     a.add_left(b)
     a.add_right(c)
-    a.iter_visit_last(print)
+    print( isinstance(a, Tree) )
+    #a.iter_visit_last(print)
